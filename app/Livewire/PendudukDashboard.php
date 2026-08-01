@@ -98,9 +98,15 @@ class PendudukDashboard extends Component
 
     private function getMetrics(): array
     {
-        $total = DataStatistik::where('nama_indikator', 'Jumlah Penduduk (Total)')
+        $lakiLaki = (float) (DataStatistik::where('nama_indikator', 'Jumlah Penduduk Laki-laki')
             ->where('wilayah', 'Kota Lubuklinggau')
-            ->sum('nilai');
+            ->where('tahun', $this->tahun)
+            ->value('nilai') ?? 0);
+
+        $perempuan = (float) (DataStatistik::where('nama_indikator', 'Jumlah Penduduk Perempuan')
+            ->where('wilayah', 'Kota Lubuklinggau')
+            ->where('tahun', $this->tahun)
+            ->value('nilai') ?? 0);
 
         $terpadat = DataStatistik::where('nama_indikator', 'Jumlah Penduduk (Total)')
             ->where('wilayah', '!=', 'Kota Lubuklinggau')
@@ -109,7 +115,7 @@ class PendudukDashboard extends Component
             ->value('wilayah');
 
         return [
-            'total' => (float) ($total ?? 0),
+            'total' => $lakiLaki + $perempuan,
             'kecamatan_terpadat' => $terpadat ?? '-',
         ];
     }

@@ -20,28 +20,36 @@
 
 
     {{-- filter --}}
-    <div class="flex flex-wrap gap-3 mb-6">
-        <select wire:model.live="tahun" class="border rounded px-3 py-2 text-sm">
+    <div class="flex flex-wrap gap-3 mb-6 ">
+        <select wire:model.live="tahun" class="cursor-pointer shadow-[0_0_4px_rgba(0,0,0,0.5)] rounded px-3 py-2 text-sm ">
             @foreach ($daftarTahun as $th)
-                <option value="{{ $th }}">Tahun {{ $th }}</option>
+                <option value="{{ $th }}">Tahun {{ $th }} </option>
             @endforeach
         </select>
 
         <input type="text" wire:model.live.debounce.400ms="search" placeholder="Cari nama kecamatan..."
-            class="border rounded px-3 py-2 text-sm flex-1 min-w-[200px]">
-
-        <button wire:click="createData" class="bg-blue-900 text-white px-4 py-2 rounded text-sm">Tambah Data</button>
+            class="shadow-[0_0_4px_rgba(0,0,0,0.4)] rounded px-3 py-2 text-sm flex-1 min-w-[200px]">
+        <button wire:click="createData" class="bg-blue-600 text-white px-4 py-2 rounded text-sm cursor-pointer">Tambah Data</button>
     </div>
 
 
     {{-- donut chart --}}
-    <div class="bg-white border rounded-lg p-4 mb-6">
+    <div class="bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)] rounded-lg p-4 mb-6">
         <p class="font-medium mb-2">Perbandingan Gender Kota Lubuklinggau ({{ $tahun }})</p>
         <div id="donut-chart" style="height:300px" wire:ignore></div>
+        <p class="text-center text-sm  mt-2">
+            Total penduduk: <span class="font-semibold text-gray-800">
+                {{ number_format($donutData['laki_laki'] + $donutData['perempuan'], 0, ',', '.') }}
+            </span > Jiwa
+            <span></br>
+            Laki-Laki: <span class="font-bold">{{ number_format($donutData['laki_laki'], 0, ',', '.') }}</span>,
+            Perempuan: <span class="font-bold">{{ number_format($donutData['perempuan'], 0, ',', '.') }}</span>
+        </span>
+        </p>
     </div>
 
     {{-- bar chart --}}
-    <div class="bg-white border rounded-lg p-4 mb-6">
+    <div class="bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)] rounded-lg p-4 mb-6">
         <p class="font-medium mb-2">Penduduk Menurut Gender per Kecamatan Tahun {{ $tahun }}</p>
         <div id="bar-chart" style="height:350px" wire:ignore></div>
     </div>
@@ -57,7 +65,7 @@
                         <lable class="text-sm text-gray-600">Nama Indikator</lable>
                         <input type="text" name="" id="" wire:model="nama_indikator"
                             placeholder="Contoh: Jumlah Penduduk Laki-laki"
-                            class="border rounded px-3 py-2 text-sm w-full">
+                            class="shadow-[0_0_3px_rgba(0,0,0,0.5)] rounded px-3 py-2 text-sm w-full">
                         @error('nama_indikator')
                             <span class="text-red-600 text-sm">{{ $message }}</span>
                         @enderror
@@ -65,17 +73,17 @@
                     <div>
                         <label class="text-sm text-gray-600">Kategori</label>
                         <input type="text" wire:model="kategori" placeholder="Contoh: Gender"
-                            class="border rounded px-3 py-2 text-sm w-full">
+                            class="shadow-[0_0_3px_rgba(0,0,0,0.5)] rounded px-3 py-2 text-sm w-full">
                     </div>
                     <div>
                         <label class="text-sm text-gray-600">Wilayah</label>
                         <input type="text" wire:model="wilayah" placeholder="Contoh: Kota Lubuklinggau Barat 1"
-                            class="border rounded px-3 py-2 text-sm w-full">
+                            class="shadow-[0_0_3px_rgba(0,0,0,0.5)] rounded px-3 py-2 text-sm w-full">
                     </div>
                     <div>
                         <label class="text-sm text-gray-600">Tahun</label>
                         <input type="number" wire:model="form_tahun" placeholder="Contoh: 2023"
-                            class="border rounded px-3 py-2 text-sm w-full">
+                            class="shadow-[0_0_3px_rgba(0,0,0,0.5)] rounded px-3 py-2 text-sm w-full">
                         @error('form_tahun')
                             <span class="text-red-500 text-xs">{{ $message }}</span>
                         @enderror
@@ -83,7 +91,7 @@
                     <div>
                         <label class="text-sm text-gray-600">Nilai</label>
                         <input type="text" wire:model="nilai" placeholder="Contoh: 1000"
-                            class="border rounded px-3 py-2 text-sm w-full">
+                            class="shadow-[0_0_3px_rgba(0,0,0,0.5)] rounded px-3 py-2 text-sm w-full">
                         @error('nilai')
                             <span class="text-red-500 text-xs">{{ $message }}</span>
                         @enderror
@@ -91,22 +99,22 @@
                     <div>
                         <label class="text-sm text-gray-600">Satuan</label>
                         <input type="text" wire:model="satuan" placeholder="Contoh: Jiwa"
-                            class="border rounded px-3 py-2 text-sm w-full">
+                            class="shadow-[0_0_3px_rgba(0,0,0,0.5)] rounded px-3 py-2 text-sm w-full">
                     </div>
                 </div>
 
                 <div class="flex gap-2 mt-5">
                     <button wire:click="saveData "
-                        class="bg-blue-900 text-white px-4 py-2 rounded text-sm items-center">Simpan</button>
+                        class="bg-blue-600 text-white px-4 py-2 rounded text-sm items-center cursor-pointer">Simpan</button>
                     <button wire:click="cancelForm"
-                        class="bg-red-600 text-white items-center px-4 py-2 rounded text-sm">Batal</button>
+                        class="bg-red-600 text-white items-center px-4 py-2 rounded text-sm cursor-pointer">Batal</button>
                 </div>
             </div>
         </div>
     @endif
 
     {{-- tabel --}}
-    <div class="bg-white border rounded-lg p-4">
+    <div class="bg-white shadow-[0_0_10px_rgba(0,0,0,0.1)] rounded-lg p-6">
         <div class="flex justify-between items-center mb-3">
             <p class="font-medium">Kelola Data</p>
 
@@ -127,7 +135,7 @@
             </thead>
             <tbody>
                 @forelse ($pivotData as $i => $row)
-                    <tr class="{{ $i % 2 === 0 ? 'bg-white' : 'bg-blue-100' }} border-b">
+                    <tr class="{{ $i % 2 === 0 ? 'bg-white' : 'bg-blue-100' }}">
                         <td class="py-2 px-3">{{ $row['wilayah'] }}</td>
                         <td class="py-2 px-3 text-center">{{ number_format($row['laki_laki'], 1, ',', '.') }}</td>
                         <td class="py-2 px-3 text-center">{{ number_format($row['perempuan'], 1, ',', '.') }}</td>
@@ -135,10 +143,10 @@
                         </td>
                         <td class="py-2 px-3 text-center space-x-2">
                             <button wire:click="editPenduduk('{{ $row['wilayah'] }}')"
-                                class="text-blue-600">Edit</button>
+                                class="text-blue-600 cursor-pointer">Edit</button>
                             <button wire:click="deletePenduduk('{{ $row['wilayah'] }}')"
                                 wire:confirm="Yakin hapus data {{ $row['wilayah'] }}?"
-                                class="text-red-600">Hapus</button>
+                                class="text-red-600 cursor-pointer">Hapus</button>
                         </td>
                     </tr>
                 @empty
@@ -164,7 +172,7 @@
                     <div>
                         <label class="text-sm text-gray-600">Jumlah Laki-Laki</label>
                         <input type="number" wire:model="editLakiLaki"
-                            class="border rounded px-3 py-2 text-sm w-full">
+                            class="shadow-[0_0_3px_rgba(0,0,0,0.5)] rounded px-3 py-2 text-sm w-full">
                         @error('editLakiLaki')
                             <span class="text-red-500 text-xs">{{ $message }}</span>
                         @enderror
@@ -172,7 +180,7 @@
                     <div>
                         <label class="text-sm text-gray-600">Jumlah Perempuan</label>
                         <input type="number" wire:model="editPerempuan"
-                            class="border rounded px-3 py-2 text-sm w-full">
+                            class="shadow-[0_0_3px_rgba(0,0,0,0.5)] rounded px-3 py-2 text-sm w-full">
                         @error('editPerempuan')
                             <span class="text-red-500 text-xs">{{ $message }}</span>
                         @enderror
@@ -181,8 +189,8 @@
 
                 <div class="flex gap-2 mt-5">
                     <button wire:click="savePenduduk"
-                        class="bg-blue-600 text-white px-4 py-2 rounded text-sm">Simpan</button>
-                    <button wire:click="cancelPendudukForm" class="border px-4 py-2 rounded text-sm">Batal</button>
+                        class="bg-blue-600 text-white px-4 py-2 rounded text-sm cursor-pointer">Simpan</button>
+                    <button wire:click="cancelPendudukForm" class="border px-4 py-2 rounded text-sm text-white bg-red-600 cursor-pointer">Batal</button>
                 </div>
             </div>
         </div>
@@ -200,7 +208,7 @@
             donutChart = Highcharts.chart('donut-chart', {
                 chart: {
                     type: 'pie',
-                    backgroundColor: '#F9FAFB'
+                    backgroundColor: '#FFFFFF'
                 },
                 title: {
                     text: null
@@ -216,7 +224,7 @@
                         }, {
                             enabled: true,
                             distance: -18,
-                            format: '{point.percentage:.0f}%',
+                            format: '{point.percentage:.2f}%',
                             style: {
                                 fontSize: '0.9em'
                             }
@@ -245,7 +253,7 @@
             barChart = Highcharts.chart('bar-chart', {
                 chart: {
                     type: 'column',
-                    backgroundColor: '#F9FAFB'
+                    backgroundColor: '#FFFFFF'
                 },
                 title: {
                     text: null

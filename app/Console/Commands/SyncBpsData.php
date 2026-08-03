@@ -14,7 +14,7 @@ class SyncBpsData extends Command
      * @var string
      */
     protected $signature = 'bps:sync';
-    protected $description = 'Sinkronisasi API BPS kota Lubuk Linggau ke database lokal';
+    protected $description = 'Sinkronisasi API BPS kota Lubuklinggau ke database lokal';
 
     private string $baseUrl = 'https://webapi.bps.go.id/v1/api';
     private string $apiKey;
